@@ -1,5 +1,15 @@
 {
   "name": "clinica-agendamentos",
   "version": "1.0.0",
-  "private": true
+  "private": true,
+  "scripts": {
+    "test:bdd": "npm run build --prefix services/pacientes && npm run build --prefix services/agendamentos && cucumber-js",
+    "test:all": "npm run test --prefix services/pacientes && npm run test --prefix services/agendamentos && npm run test --prefix services/notificacoes && npm run test:bdd"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.0.0",
+    "@types/node": "^22.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0"
+  }
 }
