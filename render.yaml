@@ -1,0 +1,55 @@
+services:
+  - type: web
+    name: clinica-gateway
+    runtime: docker
+    dockerfilePath: ./services/gateway/Dockerfile
+    dockerContext: ./services/gateway
+    plan: free
+    envVars:
+      - key: PACIENTES_URL
+        fromService:
+          name: clinica-pacientes
+          type: web
+          property: hostport
+      - key: AGENDAMENTOS_URL
+        fromService:
+          name: clinica-agendamentos
+          type: web
+          property: hostport
+      - key: NOTIFICACOES_URL
+        fromService:
+          name: clinica-notificacoes
+          type: web
+          property: hostport
+
+  - type: web
+    name: clinica-pacientes
+    runtime: docker
+    dockerfilePath: ./services/pacientes/Dockerfile
+    dockerContext: ./services/pacientes
+    plan: free
+
+  - type: web
+    name: clinica-agendamentos
+    runtime: docker
+    dockerfilePath: ./services/agendamentos/Dockerfile
+    dockerContext: ./services/agendamentos
+    plan: free
+    envVars:
+      - key: PACIENTES_URL
+        fromService:
+          name: clinica-pacientes
+          type: web
+          property: hostport
+      - key: NOTIFICACOES_URL
+        fromService:
+          name: clinica-notificacoes
+          type: web
+          property: hostport
+
+  - type: web
+    name: clinica-notificacoes
+    runtime: docker
+    dockerfilePath: ./services/notificacoes/Dockerfile
+    dockerContext: ./services/notificacoes
+    plan: free
