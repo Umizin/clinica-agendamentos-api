@@ -2,6 +2,7 @@ import express from 'express';
 import { AgendamentoFactory } from './application/factories/AgendamentoFactory';
 import { CriarAgendamento } from './application/usecases/CriarAgendamento';
 import { ListarAgendamentos } from './application/usecases/ListarAgendamentos';
+import { ConfirmarAgendamento } from './application/usecases/ConfirmarAgendamento';
 import { AgendamentoRepositoryMemoria } from './infrastructure/repositories/AgendamentoRepositoryMemoria';
 import { NotificacaoObserver } from './infrastructure/observers/NotificacaoObserver';
 import { PacienteHttpGateway } from './infrastructure/gateways/PacienteHttpGateway';
@@ -25,11 +26,17 @@ const criarAgendamento = new CriarAgendamento(
   observers
 );
 const listarAgendamentos = new ListarAgendamentos(repository);
-const controller = new AgendamentoController(criarAgendamento, listarAgendamentos);
+const confirmarAgendamento = new ConfirmarAgendamento(repository);
+const controller = new AgendamentoController(
+  criarAgendamento,
+  listarAgendamentos,
+  confirmarAgendamento
+);
 
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
 app.post('/agendamentos', controller.criar);
 app.get('/agendamentos', controller.listar);
+app.patch('/agendamentos/:id/confirmar', controller.confirmar);
 
 const porta = process.env.PORT || 3002;
 app.listen(porta, () => console.log(`agendamentos na porta ${porta}`));
