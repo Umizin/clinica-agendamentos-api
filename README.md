@@ -113,7 +113,7 @@ Exemplo cadastro:
 POST /api/pacientes
 {
   "nome": "Ana Silva",
-  "cpf": "12345678901",
+  "cpf": "52998224725",
   "email": "ana@email.com"
 }
 ```

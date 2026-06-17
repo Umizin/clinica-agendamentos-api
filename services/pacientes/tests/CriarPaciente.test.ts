@@ -15,19 +15,30 @@ describe('CriarPaciente', () => {
   it('cria paciente com dados validos', async () => {
     const paciente = await useCase.executar({
       nome: 'Ana Silva',
-      cpf: '12345678901',
+      cpf: '52998224725',
       email: 'ana@email.com'
     });
 
     expect(paciente.nome).toBe('Ana Silva');
+    expect(paciente.cpf).toBe('52998224725');
     expect(paciente.id).toBeDefined();
   });
 
   it('rejeita cpf duplicado', async () => {
-    const dados = { nome: 'Ana', cpf: '12345678901', email: 'ana@email.com' };
+    const dados = { nome: 'Ana', cpf: '52998224725', email: 'ana@email.com' };
     await useCase.executar(dados);
 
     await expect(useCase.executar(dados)).rejects.toThrow('CPF ja cadastrado');
+  });
+
+  it('rejeita cpf invalido', async () => {
+    await expect(
+      useCase.executar({
+        nome: 'Ana',
+        cpf: '12345678901',
+        email: 'ana@email.com'
+      })
+    ).rejects.toThrow('CPF invalido');
   });
 });
 
@@ -37,7 +48,7 @@ describe('BuscarPaciente', () => {
     const criar = new CriarPaciente(repository, new PacienteFactory());
     const paciente = await criar.executar({
       nome: 'Joao',
-      cpf: '98765432100',
+      cpf: '39053344705',
       email: 'joao@email.com'
     });
 
