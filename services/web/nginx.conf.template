@@ -1,10 +1,11 @@
 server {
-  listen 8080;
+  listen LISTEN_PORT;
   root /usr/share/nginx/html;
   index index.html;
 
   location /api/ {
-    proxy_pass GATEWAY_URL/api/;
+    set $gateway GATEWAY_URL;
+    proxy_pass $gateway;
     proxy_http_version 1.1;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
