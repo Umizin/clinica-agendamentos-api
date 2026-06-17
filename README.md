@@ -51,7 +51,7 @@ Regra de dependencia: camadas internas nao conhecem as externas.
 | Strategy   | EmailStrategy, SmsStrategy |
 | Observer   | NotificacaoObserver em agendamentos |
 | Singleton  | Config em notificacoes |
-| Adapter    | PacienteHttpGateway |
+| Adapter    | PacienteHttpGateway em agendamentos e notificacoes |
 
 ## Clean Code
 

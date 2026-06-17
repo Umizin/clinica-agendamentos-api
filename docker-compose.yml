@@ -1,38 +1,82 @@
-services:
-  web:
-    build: ./services/web
-    ports:
-      - "8080:8080"
-    depends_on:
-      - gateway
-
-  gateway:
-    build: ./services/gateway
-    ports:
-      - "3000:3000"
-    environment:
-      PACIENTES_URL: http://pacientes:3001
-      AGENDAMENTOS_URL: http://agendamentos:3002
-      NOTIFICACOES_URL: http://notificacoes:3003
-    depends_on:
-      - pacientes
-      - agendamentos
-      - notificacoes
-
-  pacientes:
-    build: ./services/pacientes
-    ports:
-      - "3001:3001"
-
-  agendamentos:
-    build: ./services/agendamentos
-    ports:
-      - "3002:3002"
-    environment:
-      PACIENTES_URL: http://pacientes:3001
-      NOTIFICACOES_URL: http://notificacoes:3003
-
-  notificacoes:
-    build: ./services/notificacoes
-    ports:
-      - "3003:3003"
+services:
+
+  web:
+
+    build: ./services/web
+
+    ports:
+
+      - "8080:8080"
+
+    depends_on:
+
+      - gateway
+
+
+
+  gateway:
+
+    build: ./services/gateway
+
+    ports:
+
+      - "3000:3000"
+
+    environment:
+
+      PACIENTES_URL: http://pacientes:3001
+
+      AGENDAMENTOS_URL: http://agendamentos:3002
+
+      NOTIFICACOES_URL: http://notificacoes:3003
+
+    depends_on:
+
+      - pacientes
+
+      - agendamentos
+
+      - notificacoes
+
+
+
+  pacientes:
+
+    build: ./services/pacientes
+
+    ports:
+
+      - "3001:3001"
+
+
+
+  agendamentos:
+
+    build: ./services/agendamentos
+
+    ports:
+
+      - "3002:3002"
+
+    environment:
+
+      PACIENTES_URL: http://pacientes:3001
+
+      NOTIFICACOES_URL: http://notificacoes:3003
+
+
+
+  notificacoes:
+
+    build: ./services/notificacoes
+
+    ports:
+
+      - "3003:3003"
+
+    environment:
+
+      PACIENTES_URL: http://pacientes:3001
+
+      RESEND_FROM: onboarding@resend.dev
+

@@ -1,8 +1,20 @@
 import { NotificacaoContext } from '../src/application/NotificacaoContext';
 import { EnviarNotificacao } from '../src/application/usecases/EnviarNotificacao';
+import { NotificacaoStrategy } from '../src/domain/strategies/NotificacaoStrategy';
+
+class CanalFake implements NotificacaoStrategy {
+  constructor(private nome: string) {}
+
+  async enviar(): Promise<void> {}
+}
 
 describe('EnviarNotificacao', () => {
-  const useCase = new EnviarNotificacao(new NotificacaoContext());
+  const useCase = new EnviarNotificacao(
+    new NotificacaoContext({
+      email: new CanalFake('email'),
+      sms: new CanalFake('sms')
+    })
+  );
 
   it('envia por email', async () => {
     const resultado = await useCase.executar({

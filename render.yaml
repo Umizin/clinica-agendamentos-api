@@ -66,3 +66,13 @@ services:
     dockerfilePath: ./services/notificacoes/Dockerfile
     dockerContext: ./services/notificacoes
     plan: free
+    envVars:
+      - key: PACIENTES_URL
+        fromService:
+          name: clinica-pacientes
+          type: web
+          property: hostport
+      - key: RESEND_FROM
+        value: onboarding@resend.dev
+      - key: RESEND_API_KEY
+        sync: false
