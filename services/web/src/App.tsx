@@ -19,6 +19,7 @@ export default function App() {
   const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
   const [carregandoPacientes, setCarregandoPacientes] = useState(true);
   const [carregandoAgendamentos, setCarregandoAgendamentos] = useState(true);
+  const [confirmandoId, setConfirmandoId] = useState<string | null>(null);
   const [alerta, setAlerta] = useState<AlertaState | null>(null);
 
   const mostrarSucesso = (mensagem: string) => setAlerta({ tipo: 'sucesso', mensagem });
@@ -53,6 +54,21 @@ export default function App() {
     carregarAgendamentos();
   }, [carregarPacientes, carregarAgendamentos]);
 
+  async function confirmarAgendamento(id: string) {
+    setConfirmandoId(id);
+    try {
+      const agendamento = await api.confirmarAgendamento(id);
+      setAgendamentos((lista) =>
+        lista.map((item) => (item.id === id ? agendamento : item))
+      );
+      mostrarSucesso('Consulta confirmada');
+    } catch (erro) {
+      mostrarErro((erro as Error).message);
+    } finally {
+      setConfirmandoId(null);
+    }
+  }
+
   return (
     <Layout aba={aba} onTrocarAba={setAba}>
       {alerta && (
@@ -86,6 +102,8 @@ export default function App() {
             agendamentos={agendamentos}
             pacientes={pacientes}
             carregando={carregandoAgendamentos}
+            confirmandoId={confirmandoId}
+            onConfirmar={confirmarAgendamento}
           />
         </>
       )}

@@ -53,8 +53,10 @@ export function PacienteForm({ onSalvo, onErro }: PacienteFormProps) {
             value={cpf}
             onChange={(e) => setCpf(e.target.value.replace(/\D/g, '').slice(0, 11))}
             required
+            minLength={11}
+            maxLength={14}
             className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none ring-clinica-500 focus:ring-2"
-            placeholder="12345678901"
+            placeholder="52998224725"
           />
         </label>
 

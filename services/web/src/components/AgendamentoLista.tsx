@@ -4,6 +4,8 @@ interface AgendamentoListaProps {
   agendamentos: Agendamento[];
   pacientes: { id: string; nome: string }[];
   carregando: boolean;
+  confirmandoId: string | null;
+  onConfirmar: (id: string) => void;
 }
 
 const statusCores = {
@@ -12,7 +14,13 @@ const statusCores = {
   cancelado: 'bg-rose-100 text-rose-800'
 };
 
-export function AgendamentoLista({ agendamentos, pacientes, carregando }: AgendamentoListaProps) {
+export function AgendamentoLista({
+  agendamentos,
+  pacientes,
+  carregando,
+  confirmandoId,
+  onConfirmar
+}: AgendamentoListaProps) {
   function nomePaciente(id: string) {
     return pacientes.find((p) => p.id === id)?.nome ?? 'Paciente';
   }
@@ -50,6 +58,16 @@ export function AgendamentoLista({ agendamentos, pacientes, carregando }: Agenda
               <p className="mt-3 text-sm text-slate-500">
                 {item.data} as {item.hora}
               </p>
+              {item.status === 'pendente' && (
+                <button
+                  type="button"
+                  onClick={() => onConfirmar(item.id)}
+                  disabled={confirmandoId === item.id}
+                  className="mt-4 rounded-xl bg-clinica-600 px-4 py-2 text-sm font-semibold text-white hover:bg-clinica-700 disabled:opacity-60"
+                >
+                  {confirmandoId === item.id ? 'Confirmando...' : 'Confirmar consulta'}
+                </button>
+              )}
             </article>
           ))}
         </div>

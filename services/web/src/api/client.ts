@@ -29,5 +29,7 @@ export const api = {
     request<Paciente>('/pacientes', { method: 'POST', body: JSON.stringify(dados) }),
   listarAgendamentos: () => request<Agendamento[]>('/agendamentos'),
   criarAgendamento: (dados: Omit<Agendamento, 'id' | 'status'>) =>
-    request<Agendamento>('/agendamentos', { method: 'POST', body: JSON.stringify(dados) })
+    request<Agendamento>('/agendamentos', { method: 'POST', body: JSON.stringify(dados) }),
+  confirmarAgendamento: (id: string) =>
+    request<Agendamento>(`/agendamentos/${id}/confirmar`, { method: 'PATCH' })
 };
