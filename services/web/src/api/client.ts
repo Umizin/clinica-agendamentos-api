@@ -1,6 +1,6 @@
 import { Agendamento, Paciente } from '../types';
 
-const base = '/api';
+const base = import.meta.env.VITE_API_URL || '/api';
 
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
   const resposta = await fetch(`${base}${url}`, {

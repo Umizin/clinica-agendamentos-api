@@ -6,11 +6,8 @@ services:
     dockerContext: ./services/web
     plan: free
     envVars:
-      - key: GATEWAY_URL
-        fromService:
-          name: clinica-gateway
-          type: web
-          property: hostport
+      - key: VITE_API_URL
+        value: https://clinica-gateway.onrender.com/api
 
   - type: web
     name: clinica-gateway
@@ -20,20 +17,11 @@ services:
     plan: free
     envVars:
       - key: PACIENTES_URL
-        fromService:
-          name: clinica-pacientes
-          type: web
-          property: hostport
+        value: https://clinica-pacientes.onrender.com
       - key: AGENDAMENTOS_URL
-        fromService:
-          name: clinica-agendamentos
-          type: web
-          property: hostport
+        value: https://clinica-agendamentos.onrender.com
       - key: NOTIFICACOES_URL
-        fromService:
-          name: clinica-notificacoes
-          type: web
-          property: hostport
+        value: https://clinica-notificacoes.onrender.com
 
   - type: web
     name: clinica-pacientes
@@ -50,15 +38,9 @@ services:
     plan: free
     envVars:
       - key: PACIENTES_URL
-        fromService:
-          name: clinica-pacientes
-          type: web
-          property: hostport
+        value: https://clinica-pacientes.onrender.com
       - key: NOTIFICACOES_URL
-        fromService:
-          name: clinica-notificacoes
-          type: web
-          property: hostport
+        value: https://clinica-notificacoes.onrender.com
 
   - type: web
     name: clinica-notificacoes
@@ -68,10 +50,7 @@ services:
     plan: free
     envVars:
       - key: PACIENTES_URL
-        fromService:
-          name: clinica-pacientes
-          type: web
-          property: hostport
+        value: https://clinica-pacientes.onrender.com
       - key: RESEND_FROM
         value: onboarding@resend.dev
       - key: RESEND_API_KEY

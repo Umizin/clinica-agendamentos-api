@@ -1,11 +1,18 @@
 import express from 'express';
+import cors from 'cors';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const app = express();
+app.use(cors());
 
-const pacientesUrl = process.env.PACIENTES_URL || 'http://localhost:3001';
-const agendamentosUrl = process.env.AGENDAMENTOS_URL || 'http://localhost:3002';
-const notificacoesUrl = process.env.NOTIFICACOES_URL || 'http://localhost:3003';
+function urlServico(valor: string | undefined, local: string): string {
+  const url = valor || local;
+  return url.startsWith('http') ? url : `http://${url}`;
+}
+
+const pacientesUrl = urlServico(process.env.PACIENTES_URL, 'http://localhost:3001');
+const agendamentosUrl = urlServico(process.env.AGENDAMENTOS_URL, 'http://localhost:3002');
+const notificacoesUrl = urlServico(process.env.NOTIFICACOES_URL, 'http://localhost:3003');
 
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', servicos: ['pacientes', 'agendamentos', 'notificacoes'] });

@@ -11,8 +11,13 @@ import { AgendamentoController } from './presentation/controllers/AgendamentoCon
 const app = express();
 app.use(express.json());
 
-const pacientesUrl = process.env.PACIENTES_URL || 'http://localhost:3001';
-const notificacoesUrl = process.env.NOTIFICACOES_URL || 'http://localhost:3003';
+function urlServico(valor: string | undefined, local: string): string {
+  const url = valor || local;
+  return url.startsWith('http') ? url : `http://${url}`;
+}
+
+const pacientesUrl = urlServico(process.env.PACIENTES_URL, 'http://localhost:3001');
+const notificacoesUrl = urlServico(process.env.NOTIFICACOES_URL, 'http://localhost:3003');
 
 const repository = new AgendamentoRepositoryMemoria();
 const factory = new AgendamentoFactory();

@@ -2,7 +2,7 @@
 
 Sistema de agendamento de consultas medicas com microsservicos.
 
-Link publicado: substituir apos deploy
+Link publicado: https://clinica-web-xuxr.onrender.com
 
 ## Problema
 

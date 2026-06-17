@@ -10,7 +10,12 @@ import { Config } from './infrastructure/singleton/Config';
 const app = express();
 app.use(express.json());
 
-const pacientesUrl = process.env.PACIENTES_URL || 'http://localhost:3001';
+function urlServico(valor: string | undefined, local: string): string {
+  const url = valor || local;
+  return url.startsWith('http') ? url : `http://${url}`;
+}
+
+const pacientesUrl = urlServico(process.env.PACIENTES_URL, 'http://localhost:3001');
 const pacienteGateway = new PacienteHttpGateway(pacientesUrl);
 
 const context = new NotificacaoContext({
