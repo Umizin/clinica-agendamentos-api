@@ -2,7 +2,15 @@
 
 Sistema de agendamento de consultas medicas com microsservicos.
 
+Repositorio: https://github.com/Umizin/clinica-agendamentos-api
+
 Link publicado: https://clinica-web-xuxr.onrender.com
+
+## Requisitos
+
+- Node.js 20+
+- Docker e Docker Compose (forma recomendada de executar)
+- npm
 
 ## Problema
 
@@ -67,6 +75,13 @@ cd services/agendamentos && npm test
 cd services/notificacoes && npm test
 ```
 
+Todos os testes de uma vez:
+
+```
+npm install
+npm run test:all
+```
+
 ## BDD
 
 Cenarios Gherkin em portugues na pasta bdd.
@@ -80,6 +95,8 @@ npm run test:bdd
 
 Interface React com Tailwind na pasta `services/web`.
 
+Para desenvolvimento local, suba os microsservicos (gateway e backends) e depois:
+
 ```
 cd services/web
 npm install
@@ -90,6 +107,8 @@ Abra `http://localhost:8080` com o gateway rodando na porta 3000.
 
 ## Docker
 
+Forma mais simples de executar o projeto completo:
+
 ```
 docker compose up --build
 ```
@@ -99,12 +118,13 @@ Abra `http://localhost:8080` para usar o sistema.
 Endpoints da API via gateway:
 
 ```
-GET  http://localhost:3000/health
-POST http://localhost:3000/api/pacientes
-GET  http://localhost:3000/api/pacientes
-POST http://localhost:3000/api/agendamentos
-GET  http://localhost:3000/api/agendamentos
-POST http://localhost:3000/api/notificacoes
+GET   http://localhost:3000/health
+POST  http://localhost:3000/api/pacientes
+GET   http://localhost:3000/api/pacientes
+POST  http://localhost:3000/api/agendamentos
+GET   http://localhost:3000/api/agendamentos
+PATCH http://localhost:3000/api/agendamentos/:id/confirmar
+POST  http://localhost:3000/api/notificacoes
 ```
 
 Exemplo cadastro:
@@ -128,6 +148,26 @@ POST /api/agendamentos
   "data": "2026-06-20",
   "hora": "10:00"
 }
+```
+
+## Deploy
+
+Publicado no Render com o blueprint `render.yaml` (5 servicos Docker).
+
+No plano gratuito, o primeiro acesso apos inatividade pode levar cerca de 1 minuto (cold start).
+
+## Estrutura do repositorio
+
+```
+bdd/                  cenarios BDD em portugues
+services/
+  web/                frontend React
+  gateway/            API gateway
+  pacientes/          microsservico de pacientes
+  agendamentos/       microsservico de agendamentos
+  notificacoes/       microsservico de notificacoes
+docker-compose.yml    execucao local
+render.yaml           deploy no Render
 ```
 
 ## Justificativas
