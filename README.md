@@ -12,6 +12,7 @@ Clinicas pequenas perdem tempo com agenda em planilha. Pacientes ligam para marc
 
 | Servico       | Porta | Responsabilidade              |
 |---------------|-------|-------------------------------|
+| web           | 8080  | Interface para o professor    |
 | gateway       | 3000  | Entrada unica da API          |
 | pacientes     | 3001  | Cadastro e consulta pacientes |
 | agendamentos  | 3002  | Criacao de consultas          |
@@ -75,13 +76,27 @@ npm install
 npm run test:bdd
 ```
 
+## Frontend
+
+Interface React com Tailwind na pasta `services/web`.
+
+```
+cd services/web
+npm install
+npm run dev
+```
+
+Abra `http://localhost:8080` com o gateway rodando na porta 3000.
+
 ## Docker
 
 ```
 docker compose up --build
 ```
 
-Endpoints via gateway:
+Abra `http://localhost:8080` para usar o sistema.
+
+Endpoints da API via gateway:
 
 ```
 GET  http://localhost:3000/health
@@ -117,4 +132,4 @@ POST /api/agendamentos
 
 ## Justificativas
 
-Node e TypeScript pela velocidade de entrega e tipagem estatica. Memoria em vez de banco para reduzir infra na prova, mantendo Repository pronto para trocar por PostgreSQL. Gateway separa roteamento da regra de negocio. Observer desacopla agendamento de notificacao. Strategy permite novos canais sem mudar EnviarNotificacao.
+Node e TypeScript pela velocidade de entrega e tipagem estatica. Memoria em vez de banco para reduzir infra na prova, mantendo Repository pronto para trocar por PostgreSQL. Gateway separa roteamento da regra de negocio. Observer desacopla agendamento de notificacao. Strategy permite novos canais sem mudar EnviarNotificacao. Frontend consome a API sem duplicar regra de negocio.

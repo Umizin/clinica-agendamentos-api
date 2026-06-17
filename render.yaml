@@ -1,5 +1,18 @@
 services:
   - type: web
+    name: clinica-web
+    runtime: docker
+    dockerfilePath: ./services/web/Dockerfile
+    dockerContext: ./services/web
+    plan: free
+    envVars:
+      - key: GATEWAY_URL
+        fromService:
+          name: clinica-gateway
+          type: web
+          property: hostport
+
+  - type: web
     name: clinica-gateway
     runtime: docker
     dockerfilePath: ./services/gateway/Dockerfile
